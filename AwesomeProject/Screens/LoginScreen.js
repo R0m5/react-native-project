@@ -11,6 +11,11 @@ import {
 export const LoginScreen = ({ keyboardShown }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   const onRegSubmit = () => {
     Keyboard.dismiss();
@@ -42,13 +47,22 @@ export const LoginScreen = ({ keyboardShown }) => {
         onChangeText={handleEmail}
         value={email}
       />
-      <TextInput
-        style={styles.authInput}
-        placeholder={"Пароль"}
-        secureTextEntry={true}
-        onChangeText={handlePassword}
-        value={password}
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.authInput}
+          placeholder={"Пароль"}
+          secureTextEntry={!showPassword}
+          onChangeText={handlePassword}
+          value={password}
+        />
+        <TouchableOpacity
+          style={styles.togglePasswordButton}
+          onPress={handleTogglePassword}>
+          <Text style={styles.togglePasswordButtonText}>
+            {showPassword ? "Приховати" : "Показати"}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <TouchableOpacity style={styles.submitButton} onPress={onRegSubmit}>
         <Text style={styles.submitButtonText}>Увійти</Text>
@@ -83,6 +97,24 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     borderWidth: 1,
     borderColor: "#E8E8E8",
+  },
+
+  passwordContainer: {
+    position: "relative",
+  },
+
+  togglePasswordButton: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+    height: 50,
+    justifyContent: "center",
+    paddingHorizontal: 8,
+  },
+
+  togglePasswordButtonText: {
+    fontSize: 14,
+    color: "#1B4371",
   },
 
   submitButton: {

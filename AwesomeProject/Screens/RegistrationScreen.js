@@ -16,6 +16,11 @@ export const RegistrationScreen = ({ keyboardShown }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isReady, setIsReady] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   const onRegSubmit = () => {
     Keyboard.dismiss();
@@ -45,7 +50,6 @@ export const RegistrationScreen = ({ keyboardShown }) => {
       }}>
       <View style={styles.avatarThumb}></View>
       <Text style={styles.authTitle}>Реєстрація</Text>
-
       <TextInput
         style={styles.authInput}
         placeholder={"Логін"}
@@ -58,13 +62,22 @@ export const RegistrationScreen = ({ keyboardShown }) => {
         onChangeText={handleEmail}
         value={email}
       />
-      <TextInput
-        style={styles.authInput}
-        placeholder={"Пароль"}
-        secureTextEntry={true}
-        onChangeText={handlePassword}
-        value={password}
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.authInput}
+          placeholder={"Пароль"}
+          secureTextEntry={!showPassword}
+          onChangeText={handlePassword}
+          value={password}
+        />
+        <TouchableOpacity
+          style={styles.togglePasswordButton}
+          onPress={handleTogglePassword}>
+          <Text style={styles.togglePasswordButtonText}>
+            {showPassword ? "Приховати" : "Показати"}
+          </Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity style={styles.submitButton} onPress={onRegSubmit}>
         <Text style={styles.submitButtonText}>Зареєстуватися</Text>
       </TouchableOpacity>
@@ -80,6 +93,23 @@ const styles = StyleSheet.create({
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+  },
+  passwordContainer: {
+    position: "relative",
+  },
+
+  togglePasswordButton: {
+    position: "absolute",
+    top: 16,
+    right: 16,
+    height: 50,
+    justifyContent: "center",
+    paddingHorizontal: 8,
+  },
+
+  togglePasswordButtonText: {
+    fontSize: 14,
+    color: "#1B4371",
   },
 
   avatarThumb: {
