@@ -48,7 +48,8 @@ export const RegistrationScreen = ({ keyboardShown }) => {
         paddingBottom: keyboardShown ? 45 : 32,
         marginBottom: keyboardShown ? -150 : 0,
       }}>
-      <View style={styles.avatarThumb}></View>
+      <View style={styles.avatarThumb}>
+      </View>
       <Text style={styles.authTitle}>Реєстрація</Text>
       <TextInput
         style={styles.authInput}
@@ -97,7 +98,11 @@ const styles = StyleSheet.create({
   passwordContainer: {
     position: "relative",
   },
-
+  addBtn: {
+    position: "absolute",
+    bottom: "10%",
+    right: "-10%",
+  },
   togglePasswordButton: {
     position: "absolute",
     top: 16,
